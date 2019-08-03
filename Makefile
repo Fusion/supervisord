@@ -5,6 +5,8 @@ LINUX_AMD64_HOST='tvhub'
 
 DARWIN_AMD64_BIN='supervisord_darwin_amd64'
 
+WINDOWS_AMD64_BIN='supervisord_windows_amd64'
+
 PROJECT_PATH='~/Projects/GO/supervisord'
 
 all: clean linux_amd64_full darwin_full
@@ -41,10 +43,17 @@ darwin_amd64_build:
 
 darwin_amd64_full: darwin_amd64_build
 
+windows_amd64_build:
+	@echo Building Windows-AMD64 Target
+	env GOOS=windows GOARCH=amd64 go build -a -ldflags="-s -w" -o $(WINDOWS_AMD64_BIN)
+
+windows_amd64_full: windows_amd64_build
+
 .PHONY: all \
 	clean \
 	dev_build dev_compress dev_full \
 	linux_amd64_buid linux_amd64_compress linux_amd64_full \
-	darwin_amd64_buid darwin_amd64_full
+	darwin_amd64_buid darwin_amd64_full \
+	windows_amd64_buid windows_amd64_full
 
 # vim:set ts=8 sw=8 noet:
